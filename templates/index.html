@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational establishments Directory</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Educational establishments Directory</h1>
+        <a href="{{ url_for('about') }}" class="btn btn-secondary mb-3">About</a>
+        <form method="GET" action="/">
+            <div class="form-group">
+                <input type="text" name="query" class="form-control" placeholder="Search educational establishments" value="{{ request.args.get('query', '') }}">
+            </div>
+            <div class="form-group">
+                <input type="text" name="type" class="form-control" placeholder="Filter by type" value="{{ request.args.get('type', '') }}">
+            </div>
+            <div class="form-group">
+                <input type="text" name="location" class="form-control" placeholder="Filter by location" value="{{ request.args.get('location', '') }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <h2 class="mt-4">Educational establishments</h2>
+        {% if universities %}
+            <ul class="list-group mt-3">
+                {% for university in universities %}
+                    <li class="list-group-item">
+                        <a href="{{ url_for('university', id=university.id) }}">{{ university.name }}</a><br>
+                        Type: {{ university.type }}<br>
+                        Location: {{ university.location }}<br>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No universities found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
